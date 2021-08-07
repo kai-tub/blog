@@ -1,0 +1,7 @@
+[Theme]
+engine = jinja
+parent = base-jinja
+author = Kai Norman Clasen
+based_on = Tailwind CSS
+license = GPL3
+tags = Tailwind

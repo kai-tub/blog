@@ -1,0 +1,98 @@
+/* div.prompt {
+  padding: 0; */
+  /* font-size: 13px;
+  background-color: #E9E9E9;
+  margin-right: 1em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px; */
+/* } */
+
+/* jp-RenderedText  */
+/* .jp-OutputArea-output pre {
+  margin-top: 0;
+} */
+
+/* .jp-CodeCell pre {
+  margin: 0;
+} */
+
+div.output_prompt {
+  /* 5px right shift to account for margin in parent container */
+  margin: 0 5px 0 0px;
+}
+
+/* div.output_area pre {
+  font-size: 13px;
+} */
+/* No idea what this does */
+/* div.text_cell_render {
+  padding: 0px;
+  color: #333333;
+} */
+
+.rendered_html p {
+  text-align: left;
+}
+
+.rendered_html ul {
+  margin: 0 0 12px 25px;
+}
+
+.rendered_html :visited {
+  text-decoration: none;
+}
+
+.rendered_html :link {
+  text-decoration: none;
+}
+
+.rendered_html pre, .rendered_html code {
+  /* background-color: #DDDDDD; */
+  margin: 1em 0em;
+  /* font-size: 14px; */
+}
+
+.rendered_html pre {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: 0.05em;
+  padding-bottom: 0.05em;
+}
+
+.page-content > .content p {
+  margin: 0 0 0px;
+}
+
+/* Fix ipython.min.css padding for code blocks */
+.jp-Cell pre {
+  padding: 1rem 1rem;
+  border-radius: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* TODO: Automatically resize of Altair charts for very small screens */
+/* Centers output of Altair Chart :) */
+div.jp-RenderedHTML {
+	text-align: center;
+	margin: 2rem;
+	/* Ensure that rendered html has the correct height */
+	overflow: auto;
+}
+
+.vega-embed {
+    /* Setting width to 100% is required to allow dynamic scaling */
+    /* Set properties of chart to `width="container` and height to a number */
+    width: 100%;
+    /*
+    	If width and height use 'container' than
+	one could also use
+	height: auto!important;
+	Issue: The charts get very long
+	Future: Maybe there is a way to invert the scaling
+	and keep reducing the y-axis when squashing the x-axis
+    */
+    /* Setting min-width doesn't seem to be required. */
+    /* min-width: 100% !important; */
+}

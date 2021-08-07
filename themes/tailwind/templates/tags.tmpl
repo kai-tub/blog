@@ -1,0 +1,54 @@
+{#  -*- coding: utf-8 -*- #}
+{% extends 'base.tmpl' %}
+{% import 'feeds_translations_helper.tmpl' as feeds_translations with context %}
+
+{% block extra_head %}
+    {{ feeds_translations.head(kind=kind, feeds=False) }}
+{% endblock %}
+
+{% block content %}
+<article class="tagindex prose prose-md mx-auto xl:max-w-screen-lg">
+    <header>
+        <h1>{{ title|e }}</h1>
+        <div class="metadata">
+            {{ feeds_translations.translation_link(kind) }}
+        </div>
+    </header>
+    {# FUTURE: Support cat_items! #}
+    {% if cat_items %}
+        {% if items %}
+            <h2>{{ messages("Categories") }}</h2>
+        {% endif %}
+        <div class="flex justify-start space-x-5 flex-wrap mx-auto">
+        {% for text, full_name, path, link, indent_levels, indent_change_before, indent_change_after in cat_hierarchy %}
+            {# {% for i in range(indent_change_before) %}
+                <ul class="postlist">
+            {% endfor %} #}
+            {# FUTURE: Allow nested elements! #}
+            <button class="btn rounded-btn"><a class="reference" href="{{ link }}">{{ text }}</a>
+            {% if indent_change_after <= 0 %}
+                </button>
+            {% endif %}
+            {# {% for i in range(-indent_change_after) %}
+                </ul>
+                {% if i + 1 < indent_levels|length %}
+                    </li>
+                {% endif %}
+            {% endfor %} #}
+        {% endfor %}
+        </div>
+        {% if items %}
+            <h2>{{ messages("Tags") }}</h2>
+        {% endif %}
+    {% endif %}
+    {% if items %}
+        <div class="postlist flex flex-wrap justify-start space-x-8 mx-auto">
+        {% for text, link in items %}
+            {% if text not in hidden_tags %}
+                <button class="btn rounded-btn"><a class="reference listtitle" href="{{ link }}">{{ text|e }}</a></button>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
+</article>
+{% endblock %}

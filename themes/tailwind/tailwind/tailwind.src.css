@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @variants responsive {
+    .flex-important {
+      display: flex !important;
+    }
+    .block-important {
+        display: block !important;
+    }
+  }
+}
+@layer utilities {
+    .flex-break {
+        flex-basis: 100%;
+        height: 0;
+    }
+}
+
+/* I like my captions centered */
+figure figcaption {
+    text-align: center;
+}

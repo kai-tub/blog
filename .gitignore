@@ -1,0 +1,9 @@
+# ignore node dependencies
+node_modules/
+nikola/
+.doit*
+.sass-cache/
+cache/
+__pycache__/
+output/
+.ipynb_checkpoints

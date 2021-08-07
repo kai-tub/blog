@@ -1,0 +1,31 @@
+{%- extends 'lab/base.html.j2' -%}
+
+{% block in_prompt -%}
+{# Hide execution count; Nobody needs to see that #}
+{# <div class="prompt input_prompt">
+    {%- if cell.execution_count is defined -%}
+        In&nbsp;[{{ cell.execution_count|replace(None, "&nbsp;") }}]:
+    {%- else -%}
+        In&nbsp;[&nbsp;]:
+    {%- endif -%}
+</div> #}
+{%- endblock in_prompt %}
+
+{% block output_area_prompt %}
+{%- if output.output_type == 'execute_result' -%}
+{# Hide execution count; Nobody needs to see that #}
+    <div class="prompt output_prompt">
+    {# {%- if cell.execution_count is defined -%}
+        Out[{{ cell.execution_count|replace(None, "&nbsp;") }}]:
+    {%- else -%}
+        Out[&nbsp;]:
+    {%- endif -%} #}
+{%- else -%}
+    <div class="prompt">
+{%- endif -%}
+    </div>
+{% endblock output_area_prompt %}
+
+{# Could add the css resource here #}
+{% block extra_css %}
+{% endblock extra_css %}

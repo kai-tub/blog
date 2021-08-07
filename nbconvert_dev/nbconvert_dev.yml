@@ -1,0 +1,37 @@
+# mamba env create --file nbconvert_dev.yml
+name: nbconvert_dev
+channels:
+  - conda-forge
+dependencies:
+  - black
+  - bokeh
+  - colorcet
+  - dask
+  - diskcache
+  # For serving documentation; Still requires docker to be installed
+  - docker-compose
+  - folium[version='>=0.11.0']
+  - geopandas[version='=0.8.2']
+  - holoviews
+  - hypothesis
+  - ipykernel
+  - isort
+  # - jedi # Due to bug in 0.18.0 use 0.17.2
+  - jupyter
+  - jupyter_client # use version <6.1.13 due to bug
+  - jupyterlab[version='>3.0.0']
+  - jupyter-server-mathjax
+  - jupyterlab_code_formatter
+  - natsort
+  - pip
+  - pydantic
+  - pyflakes
+  - python=3.8
+  - rasterio[version='>=1.1.8']
+  - pip:
+      - aquirdturtle_collapsible_headings
+      - jupyterlab_vim
+      - jupyterlab-git
+      - jupyterlab-spellchecker
+      - jupyterlab-system-monitor # requires nbresuse >0.3.4
+      - theme-darcula # nice looking theme

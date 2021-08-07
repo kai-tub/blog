@@ -1,0 +1,10 @@
+{#  -*- coding: utf-8 -*- #}
+
+{% macro html_footer() %}
+    {% if content_footer %}
+        <footer id="footer" class="flex justify-center bg-neutral-focus text-neutral-content">
+            <div class="my-2">{{ content_footer }}</div>
+            {{ template_hooks['page_footer']() }}
+        </footer>
+    {% endif %}
+{% endmacro %}
