@@ -324,7 +324,8 @@ COMPILERS = {
     "txt2tags": ['.t2t'],
     "bbcode": ['.bb'],
     "wiki": ['.wiki'],
-    "ipynb": ['.ipynb'],
+    # "ipynb": ['.ipynb'],
+    "ipynb_sc": ['.ipynb'],
     "html": ['.html', '.htm'],
     # PHP files are rendered the usual way (i.e. with the full templates).
     # The resulting files have .php extensions, making it possible to run
@@ -1121,16 +1122,29 @@ delimiters: [
 # With the following example configuration you can use a custom jinja template
 # called `toggle.tpl` which has to be located in your site/blog main folder:
 # IPYNB_CONFIG = {'Exporter': {'template_file': 'toggle'}}
+from nbconvert_dev.custom_preprocessors import StringsToMetaDataGroupPreprocessor, ConvertBlockNotesToShortCodes
+from nbconvert.preprocessors import TagRemovePreprocessor
+
 IPYNB_CONFIG = {
     'Exporter': {
-        'template_file': 'ipynb.tmpl'
-    },
-    'RegexRemovePreprocessor': {
-        "enabled": True,
-        "patterns": [
-            "^#\s*hide"
+        'template_file': 'ipynb.tmpl',
+        "preprocessors": [
+            StringsToMetaDataGroupPreprocessor(prefix="#", strings=("hide","hide_output", "hide-output", "hide_input", "hide-input"), remove_line=True),
+            ConvertBlockNotesToShortCodes(
+                # Is **not** case-insensitive!
+                short_code_names=([
+                    "Note",
+                    "Warning",
+                    "Important",
+                    "Tip"
+                ]),
+            ),
+            TagRemovePreprocessor(
+                remove_cell_tags=("hide",),
+                remove_input_tags=("hide-input", "hide_input"), remove_all_outputs_tags=("hide-output", "hide_output")
+            ),
         ]
-    }
+    },
 }
 
 # What Markdown extensions to enable?
@@ -1425,7 +1439,3 @@ GLOBAL_CONTEXT = {
 # GLOBAL_CONTEXT as parameter when the template is about to be
 # rendered
 GLOBAL_CONTEXT_FILLER = []
-
-# Requires the sass extension: nikola plugin -i sass
-SASS_COMPILER = ""
-SASS_OPTIONS = ["--load-path=node_modules/bulma/sass/utilities/", "--load-path=node_modules/bulma/", "--load-path=node_modules/@creativebulma/bulma-collapsible/src/sass/"]

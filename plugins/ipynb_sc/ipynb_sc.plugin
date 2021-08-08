@@ -1,0 +1,12 @@
+[Core]
+name = ipynb_sc
+module = ipynb_sc
+
+[Documentation]
+author = Kai Norman Clasen
+version = 0.0.1
+description = Compile shortcodes after nbconvert
+
+[Nikola]
+PluginCategory = Compiler
+friendlyname = Jupyter Notebook SC Hot-Fix
