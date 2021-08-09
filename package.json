@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@creativebulma/bulma-collapsible": "^1.0.4",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/typography": "^0.4.1",
     "bulma": "^0.9.3",
     "daisyui": "^1.10.0",

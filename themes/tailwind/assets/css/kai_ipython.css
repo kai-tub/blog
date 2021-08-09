@@ -72,6 +72,10 @@ div.output_prompt {
   margin-bottom: 0;
 }
 
+.jp-Cell {
+  margin-top: 2rem;
+}
+
 /* TODO: Automatically resize of Altair charts for very small screens */
 /* Centers output of Altair Chart :) */
 div.jp-RenderedHTML {

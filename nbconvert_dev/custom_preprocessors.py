@@ -48,10 +48,22 @@ class StringsToMetaDataGroupPreprocessor(Preprocessor):
         return cell, resource
 
 class ConvertBlockNotesToShortCodes(Preprocessor):
+    # In my personal opinion all block-notes cells
+    # should be converted to a raw cell to get full
+    # control over the output
+    # Otherwise there is a difference between the markdown
+    # and ipynb compiler pipelines!
+    # Use something like python-markdown2 as postprocessor
+    # To then reconvert the data part to html if necessary
     short_code_names = List(Unicode(), default_value=[]).tag(config=True)
+    to_raw_cell = Bool(default_value=True).tag(config=False)
 
     def _pattern_to_short_code(self, pattern, cell):
-        cell.source = pattern.sub(r"{{% \1 %}}\2{{% /\1 %}}", cell.source)
+        subbed_source = pattern.sub(r"{{% \1 %}}\2{{% /\1 %}}", cell.source)
+        if subbed_source != cell.source:
+            cell.source = subbed_source
+            if self.to_raw_cell:
+                cell.cell_type = "raw"
         return cell
 
     def _build_regex_patterns(self):
@@ -71,7 +83,7 @@ class ConvertBlockNotesToShortCodes(Preprocessor):
         return patterns
 
     def preprocess_cell(self, cell, resource, index):
-        if cell.cell_type != "markdown":
+        if cell.cell_type == "code":
             return cell, resource
         for pattern in self._build_regex_patterns():
             cell = self._pattern_to_short_code(pattern, cell)

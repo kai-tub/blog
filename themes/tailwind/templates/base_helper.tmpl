@@ -115,9 +115,10 @@ lang="{{ lang }}">
             <link href="/assets/css/custom.css" rel="stylesheet" type="text/css">
         {% endif %}
     {% endif %}
-    {% if needs_ipython_css %}
+    <link href="/assets/css/kai_ipython.css" rel="stylesheet" type="text/css">
+    {# {% if needs_ipython_css %}
         <link href="/assets/css/kai_ipython.css" rel="stylesheet" type="text/css">
-    {% endif %}
+    {% endif %} #}
 {% endmacro %}
 
 {#  This function is deprecated; use feed_helper directly. #}

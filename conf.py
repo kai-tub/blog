@@ -1129,15 +1129,25 @@ IPYNB_CONFIG = {
     'Exporter': {
         'template_file': 'ipynb.tmpl',
         "preprocessors": [
-            StringsToMetaDataGroupPreprocessor(prefix="#", strings=("hide","hide_output", "hide-output", "hide_input", "hide-input"), remove_line=True),
+            StringsToMetaDataGroupPreprocessor(prefix="#", strings=("hide","hide_output", "hide-output", "hide_input", "hide-input", "collapse_output", "collapse_show", "collapse_hide"), remove_line=True),
             ConvertBlockNotesToShortCodes(
                 # Is **not** case-insensitive!
+                # FUTURE: should use `to_raw`
+                # Issues are the links that should be rendered
                 short_code_names=([
                     "Note",
                     "Warning",
                     "Important",
-                    "Tip"
+                    "Tip",
                 ]),
+                to_raw_cell=False,
+            ),
+            ConvertBlockNotesToShortCodes(
+                # for shortcodes that should not be processed
+                short_code_names=([
+                    "Youtube",
+                ]),
+                to_raw_cell=True,
             ),
             TagRemovePreprocessor(
                 remove_cell_tags=("hide",),

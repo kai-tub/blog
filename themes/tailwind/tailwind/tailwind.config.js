@@ -31,6 +31,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('daisyui'),
     // needs to come after typography!
