@@ -6,6 +6,7 @@ auto-build:
 build-website:
 	nikola build
 
-# Install all dependencies with mamba
+# Install all dependencies with mamba and install nb-clean filter to ensure that commits aren't dirty
 install:
 	mamba env create --file {{justfile_directory()}}/env.yml --force
+	nb-clean add-filter --preserve-cell-metadata
