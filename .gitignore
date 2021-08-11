@@ -11,3 +11,4 @@ output/
 nbconvert_dev/*.ipynb
 # tailwind.css should always be automatically generated
 themes/tailwind/assets/css/tailwind.css
+.secrets

@@ -6,24 +6,36 @@ on:
       - "main"
 
 jobs:
-  mambaforge:
-    name: Mambaforge
+  build_and_deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      - uses: extractions/setup-just@v1
+      # Make it reproducible with act
+      # just action uses typescript which isn't supported
+      # - uses: extractions/setup-just@v1
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin --force
       - run: just --version
-      # - uses: conda-incubator/setup-miniconda@v2
-      #   with:
-      #     environment-file: env.yml
-      #     miniforge-variant: Mambaforge
-      #     use-mamba: true
-      - name: Test
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: env.yml
+          miniforge-variant: Mambaforge
+          use-mamba: true
+      - name: Test installation
         run: python -c "import nikola; print(nikola.__version__)"
       - name: build-site
         run: |
           just build-theme
           just build-website
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-azO --delete"
+          SOURCE: "output/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
