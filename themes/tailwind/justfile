@@ -1,3 +1,11 @@
 # compile tailwindcss
-build-css:
+build-css: install-npm
   npx tailwindcss -i {{justfile_directory()}}/tailwind/tailwind.src.css -o {{justfile_directory()}}/assets/css/tailwind.css -c {{justfile_directory()}}/tailwind/tailwind.config.js
+
+# install npm dependencies
+install-npm:
+  npm ci {{justfile_directory()}}
+
+# update npm dependencies
+update-npm:
+  npm install {{justfile_directory()}}

@@ -21,11 +21,11 @@ BLOG_TITLE = "Geographical Data Science Blog"  # (translatable)
 BLOG_SUBTITLE = "A Machine Learner's Perspective" # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
-SITE_URL = "https://example.com/"
+SITE_URL = "	https://kaitub.uber.space/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://example.com/"
-BLOG_EMAIL = "kai.ce.tub@gmail.com"
+BLOG_EMAIL = "k.clasen@protonmail.com"
 BLOG_DESCRIPTION = "Geographical Data Science from a Machine Learner's perspective. Sharing my thoughts along my journey."  # (translatable)
 
 # Nikola is multilingual!
@@ -325,7 +325,6 @@ COMPILERS = {
     "bbcode": ['.bb'],
     "wiki": ['.wiki'],
     # "ipynb": ['.ipynb'],
-    "ipynb_sc": ['.ipynb'],
     "html": ['.html', '.htm'],
     # PHP files are rendered the usual way (i.e. with the full templates).
     # The resulting files have .php extensions, making it possible to run
@@ -336,6 +335,9 @@ COMPILERS = {
     # with many of the others.
     # "pandoc": ['.rst', '.md', '.txt'],
 }
+
+# Comes from my plugin I guess.
+COMPILERS["ipynb_sc_last"] = ['.ipynb']
 
 # Enable reST directives that insert the contents of external files such
 # as "include" and "raw." This maps directly to the docutils file_insertion_enabled
@@ -1123,13 +1125,26 @@ delimiters: [
 # called `toggle.tpl` which has to be located in your site/blog main folder:
 # IPYNB_CONFIG = {'Exporter': {'template_file': 'toggle'}}
 from nbconvert_dev.custom_preprocessors import StringsToMetaDataGroupPreprocessor, ConvertBlockNotesToShortCodes
-from nbconvert.preprocessors import TagRemovePreprocessor
+from nbconvert.preprocessors import TagRemovePreprocessor, ExecutePreprocessor
 
 IPYNB_CONFIG = {
     'Exporter': {
-        'template_file': 'ipynb.tmpl',
+        'template_file': 'themes/tailwind/ipynb.tmpl',
         "preprocessors": [
-            StringsToMetaDataGroupPreprocessor(prefix="#", strings=("hide","hide_output", "hide-output", "hide_input", "hide-input", "collapse_output", "collapse_show", "collapse_hide"), remove_line=True),
+            ExecutePreprocessor(timeout=300),
+            StringsToMetaDataGroupPreprocessor(
+                prefix="#",
+                strings=(
+                    "hide",
+                    "hide_output",
+                    "hide-output",
+                    "hide_input",
+                    "hide-input",
+                    "collapse_output",
+                    "collapse_show",
+                    "collapse_hide"
+                ),
+                remove_line=True),
             ConvertBlockNotesToShortCodes(
                 # Is **not** case-insensitive!
                 # FUTURE: should use `to_raw`
@@ -1153,6 +1168,7 @@ IPYNB_CONFIG = {
                 remove_cell_tags=("hide",),
                 remove_input_tags=("hide-input", "hide_input"), remove_all_outputs_tags=("hide-output", "hide_output")
             ),
+            StringsToMetaDataGroupPreprocessor(prefix="#", strings=("tags", "title"), remove_line=True, metadata_group="nikola"),
         ]
     },
 }

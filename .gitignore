@@ -3,7 +3,9 @@ node_modules/
 nikola/
 .doit*
 .sass-cache/
+tmp.html
 cache/
 __pycache__/
 output/
 .ipynb_checkpoints
+nbconvert_dev/*.ipynb

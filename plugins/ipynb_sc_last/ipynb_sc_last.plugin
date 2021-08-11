@@ -1,0 +1,12 @@
+[Core]
+Name = ipynb_sc_last
+Module = ipynb_sc_last
+
+[Documentation]
+Author = Kai Norman Clasen
+Version = 0.0.1
+Description = Compile shortcodes after converting notebook to html
+
+[Nikola]
+PluginCategory = Compiler
+friendlyname = Jupyter Notebook SC Hot-Fix
