@@ -9,11 +9,21 @@ jobs:
   mambaforge:
     name: Mambaforge
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          environment-file: env.yml
-          use-mamba: true
+      - uses: extractions/setup-just@v1
+      - run: just --version
+      # - uses: conda-incubator/setup-miniconda@v2
+      #   with:
+      #     environment-file: env.yml
+      #     miniforge-variant: Mambaforge
+      #     use-mamba: true
       - name: Test
         run: python -c "import nikola; print(nikola.__version__)"
+      - name: build-site
+        run: |
+          just build-theme
+          just build-website
