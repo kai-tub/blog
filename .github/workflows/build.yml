@@ -1,0 +1,19 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  mambaforge:
+    name: Mambaforge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: env.yml
+          use-mamba: true
+      - name: Test
+        run: python -c "import nikola; print(nikola.__version__)"
