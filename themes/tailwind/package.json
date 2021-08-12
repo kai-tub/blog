@@ -2,7 +2,9 @@
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.1",
     "daisyui": "^1.11.1",
+    "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.2.7"
   }
 }
