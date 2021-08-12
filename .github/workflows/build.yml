@@ -19,9 +19,19 @@ jobs:
       # - uses: extractions/setup-just@v1
       - run: curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin --force
       - run: just --version
+      - name: Cache conda
+        uses: actions/cache@v2
+        env:
+          # Increase this value to reset cache if env.yml has not changed
+          CACHE_NUMBER: 0
+        with:
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles("env.yml") }}
       - uses: conda-incubator/setup-miniconda@v2
         with:
           environment-file: env.yml
+          use-only-tar-bz2: true # This needs to be set for caching to work
+          # Note that pip depdencies aren't cached!
           miniforge-variant: Mambaforge
           use-mamba: true
       - name: Test installation
