@@ -15,7 +15,8 @@
     <section id="head">
         {{ header.html_header() }}
     </section>
-    <section id="content" class="flex-1 mx-4" role="main">
+    {# FUTURE: Maybe move this further down #}
+    <section id="content" class="postindex prose prose-lg lg:max-w-screen-lg flex-1 mx-auto w-full p-4" role="main">
         {% block content %}{% endblock %}
     </section>
     <section id="foot">

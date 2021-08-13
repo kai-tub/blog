@@ -24,7 +24,8 @@
   {% if page_links %}
       {{ pagination.page_navigation(current_page, page_links, prevlink, nextlink, prev_next_links_reversed) }}
   {% endif %}
-  <section class="postindex mx-auto prose prose-lg lg:max-w-screen-lg">
+  {# <section class="postindex mx-auto prose prose-lg lg:max-w-screen-lg"> #}
+  <section class="postindex">
   {% for post in posts %}
     <article class="h-entry post-{{ post.meta('type') }} my-12" itemscope="itemscope"
       itemtype="http://schema.org/Article">
@@ -79,11 +80,9 @@
       </div>
       {% endif %}
     </article>
-    <!-- End of loop section -->
   {% endfor %}
   </section>
-  <!-- After loop section -->
-  {# TODO: Fix: Above line inserts /section /body /html even if it shouldn't #}
+  {# Note: Above line inserts /section /body /html even if it shouldn't in libxml2>2.9.10, see: https://github.com/getnikola/nikola/issues/3564 #}
   {{ helper.html_pager() }}
   {{ comments.comment_link_script() }}
   {{ math.math_scripts_ifposts(posts) }}
