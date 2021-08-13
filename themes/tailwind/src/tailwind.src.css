@@ -23,3 +23,9 @@
 figure figcaption {
     text-align: center;
 }
+
+@layer base {
+  img {
+    @apply mx-auto;
+  }
+}

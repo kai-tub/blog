@@ -8,28 +8,34 @@
     {% endif %}
 {% endmacro %}
 
+{% macro _rss_svg() %}
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z" />
+        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z" />
+    </svg>
+{% endmacro %}
+
 {% macro _html_feed_link(link_type, link_name, link_postfix, classification, kind, language, name=None) %}
-    {% if translations|length > 1 %}
-        {% if name and kind != "archive" and kind != "author" %}
-            <button class="btn btn-outline  rounded-btn">
-            <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}" class="space-x-2"><span><i class="fas fa-rss-square"></i></span><span>{{ messages(link_name, language) }} ({{ name|e }}, {{ language }})</span></a>
-            </button>
+    <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}">
+    <button class="btn btn-outline rounded-btn gap-2">
+        <div class="flex-none">{{ _rss_svg() }}</div>
+        <div>
+        {% if translations|length > 1 %}
+            {% if name and kind != "archive" and kind != "author" %}
+                {{ messages(link_name, language) }} ({{ name|e }}, {{ language }})
+            {% else %}
+                {{ messages(link_name, language) }} ({{ language }})
+            {% endif %}
         {% else %}
-            <button class="btn btn-outline rounded-btn">
-            <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}" class="space-x-2"><span><i class="fas fa-rss-square"></i></span><span>{{ messages(link_name, language) }} ({{ language }})</span></a>
-            </button>
+            {% if name and kind != "archive" and kind != "author" %}
+                {{ messages(link_name, language) }} ({{ name|e }})
+            {% else %}
+                {{ messages(link_name, language) }}
+            {% endif %}
         {% endif %}
-    {% else %}
-        {% if name and kind != "archive" and kind != "author" %}
-            <button class="btn btn-outline rounded-btn">
-            <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}" class="space-x-2"><span><i class="fas fa-rss-square"></i></span><span>{{ messages(link_name, language) }} ({{ name|e }})</span></a>
-            </button>
-        {% else %}
-            <button class="btn btn-outline rounded-btn">
-            <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}" class="space-x-2"><span><i class="fas fa-rss-square"></i></span><span>{{ messages(link_name, language) }}</span></a>
-            </button>
-        {% endif %}
-    {% endif %}
+        </div>
+    </button>
+    </a>
 {% endmacro %}
 
 {% macro _html_translation_link(classification, kind, language, name=None) %}

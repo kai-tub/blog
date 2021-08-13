@@ -140,14 +140,30 @@ TRANSLATIONS_PATTERN = '{path}.{lang}.{ext}'
 #          else they won’t be highlighted when active.
 
 # My theme assumes either normal text or a two-value tuple
-# The tuple is then a fontawesome5 font combined with text
+# The tuple is then an svg path definition combined with text
 # Text may be left empty
+# Get icons from here: Preferably solid:
+# https://heroicons.com/
+# Only add the path html code
+archive_svg_path = """
+    <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
+    <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
+"""
+
+tag_svg_path = """
+  <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+"""
+
+rss_svg_path = """
+  <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z" />
+  <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z" />
+"""
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        ("/archive.html", ("fas fa-archive", "Archive")),
-        ("/categories/", ("fas fa-tags", "Tags")),
-        ("/rss.xml", ("fas fa-rss-square", "RSS")),
+        ("/archive.html", (archive_svg_path, "Archive")),
+        ("/categories/", (tag_svg_path, "Tags")),
+        ("/rss.xml", (rss_svg_path, "RSS")),
     ),
 }
 
@@ -1124,8 +1140,16 @@ delimiters: [
 # With the following example configuration you can use a custom jinja template
 # called `toggle.tpl` which has to be located in your site/blog main folder:
 # IPYNB_CONFIG = {'Exporter': {'template_file': 'toggle'}}
-from nbconvert_dev.custom_preprocessors import StringsToMetaDataGroupPreprocessor, ConvertBlockNotesToShortCodes
-from nbconvert.preprocessors import TagRemovePreprocessor, ExecutePreprocessor
+from nbconvert_dev.custom_preprocessors import (
+    StringsToMetaDataGroupPreprocessor,
+    ConvertBlockNotesToShortCodes
+)
+
+from nbconvert.preprocessors import (
+    TagRemovePreprocessor,
+    ExecutePreprocessor,
+    ExtractOutputPreprocessor,
+)
 
 IPYNB_CONFIG = {
     'Exporter': {
@@ -1168,7 +1192,18 @@ IPYNB_CONFIG = {
                 remove_cell_tags=("hide",),
                 remove_input_tags=("hide-input", "hide_input"), remove_all_outputs_tags=("hide-output", "hide_output")
             ),
+            # TODO: Allow magic comments to overwrite tag
             StringsToMetaDataGroupPreprocessor(prefix="#", strings=("tags", "title"), remove_line=True, metadata_group="nikola"),
+            # FUTURE: Maybe customize to automatically export and save displayed images
+            # ExtractOutputPreprocessor(),
+            # TODO: Create a copy-image files preprocessor
+            # Preprocessor needs to look through all cells and find the
+            # spots where (true) images are linked to/included
+            # After collecting these images copy them from relative path
+            # to the given dest folder (should be based on complete path to conf.py file)
+            # The outputted html could pass through a shortcode for custom features
+
+            # Ideally, it should be possible to do some smart gridding when multiple images are presented
         ]
     },
 }

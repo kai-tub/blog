@@ -1,0 +1,20 @@
+{
+	"grammarly.overrides": [
+		{
+			"files": [
+				"**/posts/general-ipynb-to-html-converter.md"
+			],
+			"config": {
+				"audience": "general",
+				"dialect": "american",
+				"domain": "technical",
+				"emotions": [
+					"friendly"
+				],
+				"goals": [
+					"inform"
+				]
+			}
+		}
+	]
+}

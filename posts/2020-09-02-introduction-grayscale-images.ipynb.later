@@ -1,0 +1,400 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#hide\n",
+    "from pathlib import Path\n",
+    "\n",
+    "path = Path(\".\") \n",
+    "img_path = (path / \"2020-09-02\")\n",
+    "img_path.mkdir(exist_ok=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# About\n",
+    "\n",
+    "Before we can dive into multi-spectral satellite images, I think a quick refresher on how images\n",
+    "are encoded and represented in memory is a good starting point.\n",
+    "\n",
+    "## Binary encoding\n",
+    "\n",
+    "Let's take a short recap of how classical computer vision images are encoded in memory.\n",
+    "Internally a computer (ignoring quantum-computing) only works with binary numbers. A binary number is either a 0 or a 1, on or off.\n",
+    "The value of such a binary number is called a *bit*.\n",
+    "The smallest data-element is called a *byte*. A byte consists of 8 bits.\n",
+    "There are different ways how we could use these 8 bits/1 byte to encode our data.\n",
+    "The data we are trying to store/load defines how we interpret the data. \n",
+    "If we want to only work with positive integers, we use an unsigned integer type.\n",
+    "An unsigned integer with 8 bits can encode all numbers from 0$-$255.\n",
+    "If all bits are 1, also called *set*, the value is 255.\n",
+    "If all bits are 0 the corresponding value is 0.{% fn 1 %}\n",
+    "\n",
+    "## Grayscale images\n",
+    "Images, like everything in a computer, are also only encoded in binary values.\n",
+    "The most straightforward images are grayscale images. The possible colors of each pixel of a grayscale image can only range from black to gray to white, with all different gray shades in-between. \n",
+    "*Pixels* are the basic elements of a picture. The word itself, [pixel](https://en.wikipedia.org/wiki/Pixel#Etymology), is a combination of the words picture and element/cell. So an image consists of pixels, similar to how a brick wall consists of bricks."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<figure>\n",
+    "    <div style=\"display: flex; flex-wrap: wrap; justify-content: center\">\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/brick.jpg\" alt=\"Brick\">\n",
+    "            <figcaption><center>Pixel</center></figcaption>\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/brick-wall.jpg\" alt=\"Brick Wall\">\n",
+    "            <figcaption><center>Complete Image</center></figcaption>\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "    </div>\n",
+    "    <figcaption><center>My weird analogy</center></figcaption>\n",
+    "</figure>\n",
+    "\n",
+    "We can understand how simple 8-bit grayscale images are encoded with the knowledge of our previous simple encoding scheme.\n",
+    "The 8-bit refers to the [*color-depth*](https://en.wikipedia.org/wiki/Color_depth). It indicates how many bits are used per channel.\n",
+    "We only have a single channel for a grayscale image, the\n",
+    "colors range from black to white. (We will take a closer look at different channels in the next post.)\n",
+    "For now, we note that our grayscale channel is encoded with 8-bits. Or, put differently, we use 8-bits for every pixel to show different shades of gray. With 8-bits, we can color each pixel in 256 (2⁸) different ways.\n",
+    "\n",
+    "With the [numpy](https://numpy.org/) and [PIL](https://pillow.readthedocs.io/) library,\n",
+    "we can easily create our own 8-bit grayscale image by merely changing the value of a byte. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# collapse_hide\n",
+    "\n",
+    "import numpy as np\n",
+    "from PIL import Image, ImageOps\n",
+    "\n",
+    "def to_grayscale_image(x):\n",
+    "    grayscale_8_bit_mode = \"L\"\n",
+    "    return Image.fromarray(x, mode=grayscale_8_bit_mode)\n",
+    "\n",
+    "def upscale_image(img, img_width=224, img_height=224):\n",
+    "    return img.resize((img_width, img_height), resample=Image.NEAREST)\n",
+    "\n",
+    "# PIL requires np arrays as input\n",
+    "# Datatype is uint8, our unsigned int consisting of 8-bits\n",
+    "# zero is our single byte/value with value 0\n",
+    "# -> Array has a width and height of 1\n",
+    "zero = np.zeros((1, 1), dtype=np.uint8)\n",
+    "\n",
+    "img_values = {\n",
+    "    \"pixel_0\": zero, \n",
+    "    \"pixel_64\": zero + 64, \n",
+    "    \"pixel_192\": zero + 192, \n",
+    "    \"pixel_255\": zero + 255\n",
+    "}\n",
+    "\n",
+    "for name, value in img_values.items():\n",
+    "    img = to_grayscale_image(value)\n",
+    "    img = upscale_image(img)\n",
+    "    bordered_img = ImageOps.expand(img, border=1, fill=\"black\")\n",
+    "    # display(bordered_img) # To display in jupyter\n",
+    "    bordered_img.save(img_path / f\"{name}.png\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<figure>\n",
+    "    <div style=\"display: flex; flex-wrap: wrap; justify-content: center\">\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/pixel_0.png\">\n",
+    "            <figcaption><center>0</center></figcaption>\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/pixel_64.png\">\n",
+    "            <figcaption><center>64</center></figcaption>\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/pixel_192.png\">\n",
+    "            <figcaption><center>192</center></figcaption>\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/pixel_255.png\">\n",
+    "            <figcaption><center>255</center></figcaption>\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "    </div>\n",
+    "    <figcaption><center>Visualization of different 8-bit grayscale pixel values</center></figcaption>\n",
+    "</figure>\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Until now, we did not care about the [resolution](https://en.wikipedia.org/wiki/Image_resolution#Pixel_resolution) of our images. \n",
+    "The resolution defines how many pixels we use to visualize the object. A resolution of 1 corresponds to a single pixel.\n",
+    "But, with a single-pixel picture, we cannot retain a lot of information. As shown above, we could only create a single shade of gray.\n",
+    "Let's increase our resolution for the following images to a size of 224 pixels x 224 pixels. With more pixels, we can show more levels of detail.\n",
+    "\n",
+    "Now we can extend our previous code to draw gradients!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# collapse_hide\n",
+    "zeros = np.zeros((224, 224), dtype=np.uint8)\n",
+    "x_gradient = np.arange(0, 224, dtype=np.uint8).reshape(1, 224)\n",
+    "y_gradient = np.arange(0, 224, dtype=np.uint8).reshape(224, 1)\n",
+    "\n",
+    "# Using numpy's broadcasting\n",
+    "x_grad_2d = zeros + x_gradient\n",
+    "y_grad_2d = zeros + y_gradient\n",
+    "sum_grad_2d = x_gradient + y_gradient\n",
+    "diff_grad_2d = x_gradient - y_gradient\n",
+    "\n",
+    "# Convert to a grayscale image as before\n",
+    "# and save or show files"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# hide\n",
+    "to_grayscale_image(x_grad_2d).save(img_path / \"x_grad_2d.png\")\n",
+    "to_grayscale_image(y_grad_2d).save(img_path / \"y_grad_2d.png\")\n",
+    "to_grayscale_image(sum_grad_2d).save(img_path / \"sum_grad_2d.png\")\n",
+    "to_grayscale_image(diff_grad_2d).save(img_path / \"diff_grad_2d.png\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<figure>\n",
+    "    <div style=\"display: flex; flex-wrap: wrap; justify-content: center\">\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/x_grad_2d.png\">\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/y_grad_2d.png\">\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/sum_grad_2d.png\">\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/diff_grad_2d.png\">\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "    </div>\n",
+    "    <figcaption><center>Visualization of different 8-bit grayscale images</center></figcaption>\n",
+    "</figure>\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'download_url' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m/tmp/ipykernel_132922/466333350.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#hide\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0mpeppers_fn\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mimg_path\u001b[0m \u001b[0;34m/\u001b[0m \u001b[0;34m\"peppers.png\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mdownload_url\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"http://sipi.usc.edu/database/download.php?vol=misc&img=4.2.07\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpeppers_fn\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      4\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0;32mwith\u001b[0m \u001b[0mImage\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpeppers_fn\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mpeppers\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'download_url' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "#hide\n",
+    "peppers_fn = img_path / \"peppers.png\"\n",
+    "download_url(\"http://sipi.usc.edu/database/download.php?vol=misc&img=4.2.07\", peppers_fn)\n",
+    "\n",
+    "with Image.open(peppers_fn) as peppers:\n",
+    "    peppers = peppers.resize((224, 224))\n",
+    "    peppers_grayscale = peppers.convert(\"L\")\n",
+    "peppers_grayscale.save(peppers_fn)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "If we don't limit ourselves to simple mathematical operations, we can show images with great detail."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<figure>\n",
+    "        <div>\n",
+    "            <figure>\n",
+    "<img src=\"2020-09-02/peppers.png\">\n",
+    "            </figure>\n",
+    "        </div>\n",
+    "    <figcaption><center>Typical test image</center></figcaption>\n",
+    "</figure>\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "FileNotFoundError",
+     "evalue": "[Errno 2] No such file or directory: '/home/kai/git/nikola_bulma/posts/2020-09-02/peppers.png'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
+      "\u001b[0;32m/tmp/ipykernel_132922/553118194.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#hide\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0;32mwith\u001b[0m \u001b[0mImage\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpeppers_fn\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mpeppers\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      3\u001b[0m     \u001b[0mtest_image_encoding\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0marray\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpeppers\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/miniconda/envs/blog/lib/python3.9/site-packages/PIL/Image.py\u001b[0m in \u001b[0;36mopen\u001b[0;34m(fp, mode, formats)\u001b[0m\n\u001b[1;32m   2910\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2911\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mfilename\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 2912\u001b[0;31m         \u001b[0mfp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mbuiltins\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilename\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"rb\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   2913\u001b[0m         \u001b[0mexclusive_fp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2914\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: '/home/kai/git/nikola_bulma/posts/2020-09-02/peppers.png'"
+     ]
+    }
+   ],
+   "source": [
+    "#hide\n",
+    "with Image.open(peppers_fn) as peppers:\n",
+    "    test_image_encoding = np.array(peppers)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The pepper's image consists of the following\n",
+    "values. Each value is saved as a single byte\n",
+    "on disk."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'test_image_encoding' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m/tmp/ipykernel_132922/2030204276.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m# hide_input\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0mtest_image_encoding\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m: name 'test_image_encoding' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "# hide_input\n",
+    "\n",
+    "test_image_encoding"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "> Important: Even if these images reveal a lot of information to us humans, in the end, they are only stored as 0s and 1s on the computer."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Before we move with the next topic, let's review what we have learned so far."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Summary\n",
+    "\n",
+    "Increasing the number of pixels (resolution) allows us to encode more details. The color-depth shows us how many bits\n",
+    "we use per channel to encode a color. Our previous 8-bit grayscale pixel can, therefore, encode 256 different shades of gray. With a higher color-depth, we have access to more shades.\n",
+    "But what is when we want to enrich our image with colors?\n",
+    "\n",
+    "How to add colors to our image and how remote sensing images are different will be the topic of the next blog post!\n",
+    "\n",
+    "Until then, have a productive time! :+1:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "{{ 'A quick refresher on how to translate binary numbers to unsigned integers can be found on [ryanstutorials](https://ryanstutorials.net/binary-tutorial/)' | fndetail: 1 }}\n",
+    "\n",
+    "{{ 'Sometimes the initialization of the widgets hang. The best solution I found was reopening the same page in Incognito Mode and reloading the page. It can take up to a minute until the widgets are loaded.' | fndetail: 2 }}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3.9.6 64-bit ('blog': conda)",
+   "language": "python",
+   "name": "python396jvsc74a57bd02a5aa0e5c8010637f2b6a85782d66dcdf59fd6de4191febebd9a6412d79ff53c"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
