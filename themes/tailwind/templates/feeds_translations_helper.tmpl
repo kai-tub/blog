@@ -16,10 +16,11 @@
 {% endmacro %}
 
 {% macro _html_feed_link(link_type, link_name, link_postfix, classification, kind, language, name=None) %}
-    <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}">
-    <button class="btn btn-outline rounded-btn gap-2">
-        <div class="flex-none">{{ _rss_svg() }}</div>
-        <div>
+    <a href="{{ _link(kind + '_' + link_postfix, classification, language) }}" hreflang="{{ language }}" type="{{ link_type }}" class="btn gap-2 force-no-underline">
+        <div class="flex-none text-neutral-content">
+            {{ _rss_svg() }}
+        </div>
+        <div class="text-neutral-content">
         {% if translations|length > 1 %}
             {% if name and kind != "archive" and kind != "author" %}
                 {{ messages(link_name, language) }} ({{ name|e }}, {{ language }})
@@ -34,7 +35,6 @@
             {% endif %}
         {% endif %}
         </div>
-    </button>
     </a>
 {% endmacro %}
 
@@ -102,25 +102,25 @@
     {% if generate_atom or generate_rss %}
         {% if translations|length > 1 and has_other_languages and kind != 'index' %}
             {% for language, classification, name in all_languages %}
-                <p class="feedlink">
+                <div class="feedlink">
                     {% if generate_atom %}
                         {{ _html_feed_link('application/atom+xml', 'Atom feed', 'atom', classification, kind, language, name) }}
                     {% endif %}
                     {% if generate_rss and kind != 'archive' %}
                         {{ _html_feed_link('application/rss+xml', 'RSS feed', 'rss', classification, kind, language, name) }}
                     {% endif %}
-                </p>
+                </div>
             {% endfor %}
         {% else %}
             {% for language in translations_feedorder %}
-                <p class="feedlink">
+                <div class="feedlink">
                     {% if generate_atom %}
                         {{ _html_feed_link('application/atom+xml', 'Atom feed', 'atom', classification, kind, language) }}
                     {% endif %}
                     {% if generate_rss and kind != 'archive' %}
                         {{ _html_feed_link('application/rss+xml', 'RSS feed', 'rss', classification, kind, language) }}
                     {% endif %}
-                </p>
+                </div>
             {% endfor %}
         {% endif %}
     {% endif %}

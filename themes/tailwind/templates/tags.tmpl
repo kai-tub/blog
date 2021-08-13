@@ -26,9 +26,10 @@
                 <ul class="postlist">
             {% endfor %} #}
             {# FUTURE: Allow nested elements! #}
-            <button class="btn rounded-btn"><a class="reference" href="{{ link }}">{{ text }}</a>
+            <a class="reference btn force-no-underline" href="{{ link }}">
+            <span class="text-neutral-content">{{ text }}</span>
+            </a>
             {% if indent_change_after <= 0 %}
-                </button>
             {% endif %}
             {# {% for i in range(-indent_change_after) %}
                 </ul>
@@ -46,7 +47,9 @@
         <div class="postlist flex flex-wrap justify-start space-x-8 mx-auto">
         {% for text, link in items %}
             {% if text not in hidden_tags %}
-                <button class="btn rounded-btn"><a class="reference listtitle" href="{{ link }}">{{ text|e }}</a></button>
+                <a class="reference listtitle btn force-no-underline" href="{{ link }}">
+                <span class="text-neutral-content">{{ text|e }}</span>
+                </a>
             {% endif %}
         {% endfor %}
         </div>
