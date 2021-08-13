@@ -1154,6 +1154,7 @@ from nbconvert.preprocessors import (
 IPYNB_CONFIG = {
     'Exporter': {
         'template_file': 'themes/tailwind/ipynb.tmpl',
+        "anchor_link_text": " #",
         "preprocessors": [
             ExecutePreprocessor(timeout=300),
             StringsToMetaDataGroupPreprocessor(

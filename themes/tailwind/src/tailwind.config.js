@@ -3,11 +3,13 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   // testing jit mode
   mode: 'jit',
-  purge: [
-    "*.tmpl",
-    "./shortcodes/**/*.tmpl",
-    "./templates/**/*.tmpl",
-  ],
+  purge: {
+    content: [
+      "*.tmpl",
+      "./shortcodes/**/*.tmpl",
+      "./templates/**/*.tmpl",
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {

@@ -30,3 +30,7 @@
 figure figcaption {
     text-align: center;
 }
+
+a.anchor-link {
+  @apply force-no-underline opacity-25 hover:opacity-75
+}
