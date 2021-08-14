@@ -42,13 +42,15 @@
 {% macro collapse(name, default_show="false") -%}
     <div x-data="{ open: {{ default_show }} }">
         <button type="button" class="btn btn-square rounded-none w-full px-8 py-6 content-center no-animation gap-2" x-on:click="open = ! open">
-            <span x-show="open">Hide </span>
-            <span x-show="! open">Show </span>
+            <span x-show="open" {{ "x-cloak" if default_show == "false"}}>Hide </span>
+            <span x-show="! open" {{ "x-cloak" if default_show != "false"}}>Show </span>
             <span>
                 {{ name }}
             </span>
         </button>
-        <div x-show="open" x-transition:enter="transition ease-in duration-150"
+        <div x-show="open"
+            {{ "x-cloak" if default_show == "false" }}
+            x-transition:enter="transition ease-in duration-150"
             x-transition:enter-start="opacity-0 transform -translate-y-2"
             x-transition:enter-end="opacity-100 transform"
             x-transition:leave="transition ease-in duration-300"

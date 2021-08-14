@@ -34,3 +34,7 @@ figure figcaption {
 a.anchor-link {
   @apply force-no-underline opacity-25 hover:opacity-75
 }
+
+[x-cloak] {
+  display: none !important
+}
