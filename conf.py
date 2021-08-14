@@ -744,11 +744,11 @@ GITHUB_COMMIT_SOURCE = True
 # <https://getnikola.com/handbook.html#post-processing-filters>
 #
 # from nikola import filters
-# FILTERS = {
-#    ".html": [filters.typogrify],
-#    ".js": [filters.closure_compiler],
-#    ".jpg": ["jpegoptim --strip-all -m75 -v %s"],
-# }
+
+# Make the dependency optional for now
+FILTERS = {
+   ".jpg": ["jpegoptim --strip-all -m50 -v %s || true"],
+}
 
 # Executable for the "yui_compressor" filter (defaults to 'yui-compressor').
 # YUI_COMPRESSOR_EXECUTABLE = 'yui-compressor'
