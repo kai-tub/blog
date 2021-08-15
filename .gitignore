@@ -13,3 +13,5 @@ nbconvert_dev/*.ipynb
 themes/tailwind/assets/css/tailwind.css
 .secrets
 posts/images/
+tmp.*
+.vscode/
