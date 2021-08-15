@@ -17,16 +17,16 @@ import time
 
 # Data about this site
 BLOG_AUTHOR = "Kai Norman Clasen"  # (translatable)
-BLOG_TITLE = "Geographical Data Science Blog"  # (translatable)
-BLOG_SUBTITLE = "A Machine Learner's Perspective" # (translatable)
+BLOG_TITLE = "The Lost Data Scientist"  # (translatable)
+BLOG_SUBTITLE = "Thoughts along the way" # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
-SITE_URL = "	https://kaitub.uber.space/"
+SITE_URL = "	https://kai-tub.tech"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://example.com/"
 BLOG_EMAIL = "k.clasen@protonmail.com"
-BLOG_DESCRIPTION = "Geographical Data Science from a Machine Learner's perspective. Sharing my thoughts along my journey."  # (translatable)
+BLOG_DESCRIPTION = "My data science journey. Sharing my thoughts along the way."  # (translatable)
 
 # Nikola is multilingual!
 #
@@ -1150,6 +1150,9 @@ from nbconvert.preprocessors import (
     ExecutePreprocessor,
     ExtractOutputPreprocessor,
 )
+import os
+
+os.environ["responsive"] = "True"
 
 IPYNB_CONFIG = {
     'Exporter': {
