@@ -62,8 +62,8 @@
 
 {% macro adjust_width(cell) %}
 {# FUTURE: Write a better function for this! #}
-    {% if "max-w-lg" in cell.metadata.tags|default([]) %}
-        <div class="mx-auto max-w-lg">
+    {% if "max-w-md" in cell.metadata.tags|default([]) %}
+        <div class="mx-auto max-w-md">
     {% else %}
         <div>
     {% endif %}
