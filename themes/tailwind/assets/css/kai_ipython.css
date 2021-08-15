@@ -80,7 +80,7 @@ div.output_prompt {
 /* Centers output of Altair Chart :) */
 div.jp-RenderedHTML {
 	text-align: center;
-	margin: 2rem;
+  margin: 2rem 0rem;
 	/* Ensure that rendered html has the correct height */
 	overflow: auto;
 }

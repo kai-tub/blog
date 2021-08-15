@@ -60,13 +60,29 @@
     </div>
 {%- endmacro %}
 
+{% macro adjust_width(cell) %}
+{# FUTURE: Write a better function for this! #}
+    {% if "max-w-lg" in cell.metadata.tags|default([]) %}
+        <div class="mx-auto max-w-lg">
+    {% else %}
+        <div>
+    {% endif %}
+            {{ caller() }}
+        </div>
+
+{% endmacro %}
+
 {% block output_group %}
 {%- if "collapse_output" in cell.metadata.tags|default([]) -%}
     {% call collapse("Output") %}
-        {{ super() }}
+        {% call adjust_width(cell) %}
+            {{ super() }}
+        {% endcall %}
     {% endcall %}
 {%- else -%}
-    {{ super() }}
+    {% call adjust_width(cell) %}
+        {{ super() }}
+    {% endcall %}
 {%- endif -%}
 {% endblock output_group %}
 
