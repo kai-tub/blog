@@ -38,3 +38,12 @@ a.anchor-link {
 [x-cloak] {
   display: none !important
 }
+
+body {
+  counter-reset: fn_counter_var;
+}
+
+sup::after {
+  counter-increment: fn_counter_var;
+  content: counter(fn_counter_var);
+}

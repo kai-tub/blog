@@ -1,0 +1,20 @@
+{# Requires alpinejs! #}
+{# The main issue is that the code is inside of a <p> tag by default #}
+{# Because the ipynb markdown parser sees that "nothing" special is here #}
+{# So the only allowed element is the <span> element and things like <sup> #}
+{# Which is fine to hide/show the content of the footnote, but no real styling support #}
+{# My simple hack is to define the relevant span with display: block #}
+{# Although I don't know if this is according to spec #}
+<span x-data="{ open: false }" class="-ml-1">
+	<sup x-on:click="open = !open" class="link link-primary"></sup>
+	<span x-show="open" x-cloak
+		class="m-2 p-6 font-mono rounded-lg border-2 border-primary border-opacity-50 block"
+		x-transition:enter="transition ease-in duration-200"
+		x-transition:enter-start="opacity-0 transform -translate-y-2"
+		x-transition:enter-end="opacity-100 transform"
+		x-transition:leave="transition ease-in duration-200"
+		x-transition:leave-end="opacity-0 transform -translate-y-2"
+		x-on:click.outside="open = false">
+			{{ data }}
+	</span>
+</span>
