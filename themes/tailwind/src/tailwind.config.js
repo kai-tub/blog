@@ -18,6 +18,13 @@ module.exports = {
       ...defaultTheme.screens,
     },
     extend: {
+      maxWidth: {
+        '1/10': '10%',
+        '1/5': '20%',
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
+      },
       minHeight: {
         'screen-1/4': '20vh',
         'screen-1/3': '33vh',

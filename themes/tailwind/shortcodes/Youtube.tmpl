@@ -2,6 +2,20 @@
 
 {% set yid = data.split("/") | last %}
 
-<div class="aspect-w-16 aspect-h-9">
-<iframe src="https://www.youtube-nocookie.com/embed/{{ yid }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="aspect-w-16 aspect-h-9 relative" x-data="{ openYT: false }">
+	<button href="play" class="cursor-pointer" x-show="!openYT" x-on:click.prevent="openYT = true">
+		<img class="force-no-margin force-no-padding force-p-0 absolute inset-0 z-0 rounded-lg" src="https://img.youtube.com/vi/{{ yid }}/maxresdefault.jpg" alt="YouTube thumbnail" title="Youtube Thumbnail" />
+		<div class="absolute z-10 inset-0 flex center-items justify-center">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-current max-w-1/10">
+				<title>play-circle</title>
+				<path d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8.0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-2e2 2e2-2e2s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2S56 366.5 56 256z"></path>
+			</svg>
+		</div>
+		<div class="inset-0 absolute flex flex-col justify-end z-20 text-white text-xl md:text-4xl p-4 bg-black bg-opacity-75">
+				By loading the video, you accept the YouTube Privacy Policy.
+		</div>
+	</button>
+	<template x-if="openYT">
+		<iframe class="rounded-lg" src="https://www.youtube-nocookie.com/embed/{{ yid }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</template>
 </div>

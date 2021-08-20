@@ -24,6 +24,12 @@
   .force-no-underline {
     text-decoration: none !important;
   }
+  .force-no-margin {
+    margin: 0 !important;
+  }
+  .force-no-padding {
+    padding: 0 !important;
+  }
 }
 
 /* I like my captions centered */
