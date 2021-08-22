@@ -1143,13 +1143,14 @@ delimiters: [
 # IPYNB_CONFIG = {'Exporter': {'template_file': 'toggle'}}
 from nbconvert_dev.custom_preprocessors import (
     StringsToMetaDataGroupPreprocessor,
-    ConvertBlockNotesToShortCodes
+    ConvertBlockNotesToShortCodes,
 )
 
 from nbconvert.preprocessors import (
     TagRemovePreprocessor,
     ExecutePreprocessor,
     ExtractOutputPreprocessor,
+    RegexRemovePreprocessor,
 )
 import os
 
@@ -1198,8 +1199,10 @@ IPYNB_CONFIG = {
                 remove_cell_tags=("hide",),
                 remove_input_tags=("hide-input", "hide_input"), remove_all_outputs_tags=("hide-output", "hide_output")
             ),
-            # TODO: Allow magic comments to overwrite tag
-            StringsToMetaDataGroupPreprocessor(prefix="#", strings=("tags", "title"), remove_line=True, metadata_group="nikola"),
+            # Remove empty cells
+            RegexRemovePreprocessor(
+                patterns=(r"\s*\Z",)
+            ),
             # FUTURE: Maybe customize to automatically export and save displayed images
             # ExtractOutputPreprocessor(),
             # TODO: Create a copy-image files preprocessor
