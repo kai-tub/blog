@@ -7,7 +7,7 @@ build-website:
 	nikola build
 
 build-theme:
-	just themes/tailwind/
+	just {{justfile_directory()}}/themes/tailwind/
 
 # Install environment, build theme files and build-website
 build-all-clean: install build-theme build-website
