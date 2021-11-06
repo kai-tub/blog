@@ -14,5 +14,6 @@ build-all-clean: install build-theme build-website
 
 # Install all dependencies with mamba and install nb-clean filter to ensure that commits aren't dirty
 install:
-	mamba env create --file {{justfile_directory()}}/env.yml --force
-	nb-clean add-filter --preserve-cell-metadata
+	mamba env create --file {{justfile_directory()}}/env.yml --name blog --force
+	mamba run --name blog python -m ipykernel install --user
+	mamba run --name blog nb-clean add-filter --preserve-cell-metadata
