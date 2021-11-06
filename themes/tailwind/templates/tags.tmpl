@@ -6,11 +6,17 @@
     {{ feeds_translations.head(kind=kind, feeds=False) }}
 {% endblock %}
 
+{# Overwrite prose from base.tmpl! #}
+{# As this is a "heavy" customized page, prose is hurting fine-tuning! #}
+{% block wrap_prose %}
+{% endblock  %}
+
 {% block content %}
 {# <article class="tagindex prose prose-md mx-auto xl:max-w-screen-lg"> #}
 <article class="tagindex">
-    <header>
-        <h1>{{ title|e }}</h1>
+    <header class="prose">
+        {# FUTURE: Support setting this  #}
+        <h1>{{ cat_index_page_title|e }}</h1>
         <div class="metadata">
             {{ feeds_translations.translation_link(kind) }}
         </div>
@@ -18,17 +24,39 @@
     {# FUTURE: Support cat_items! #}
     {% if cat_items %}
         {% if items %}
-            <h2>{{ messages("Categories") }}</h2>
+            {# FUTURE: Allow to set language specific title #}
         {% endif %}
-        <div class="flex justify-start space-x-5 flex-wrap mx-auto">
+        <div class="flex justify-around flex-wrap mx-auto gap-y-6">
         {% for text, full_name, path, link, indent_levels, indent_change_before, indent_change_after in cat_hierarchy %}
             {# {% for i in range(indent_change_before) %}
                 <ul class="postlist">
             {% endfor %} #}
             {# FUTURE: Allow nested elements! #}
-            <a class="reference btn force-no-underline" href="{{ link }}">
-            <span class="text-neutral-content">{{ text }}</span>
-            </a>
+            <div class="card bordered force-border-2 w-4/5 sm:w-2/5">
+                {% if cat_to_img_path(text) %}
+                    <figure>
+                        <img src="{{ cat_to_img_path(text) }}"
+                        {# <img src="https://picsum.photos/id/1005/800/500"> #}
+                    </figure>
+                {% else %}
+                {% endif %}
+                <div class="card-body">
+                    <div class="prose-sm ssm:prose flex-grow">
+                        <h2 class="card-title">
+                        {{ cat_to_pretty_title(text) }}
+                        </h2>
+                        <p>{{ cat_to_desc(text) }}</p>
+                    </div>
+                    <div class="card-actions justify-end">
+                    {# Small btn hack to get normal sized button if larger than sm #}
+                        <a class="reference btn btn-sm sm:btn btn-primary sm:btn-primary" href="{{ link }}">
+                            <span class="text-primary-content">
+                                Start Reading
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
             {% if indent_change_after <= 0 %}
             {% endif %}
             {# {% for i in range(-indent_change_after) %}
@@ -39,15 +67,20 @@
             {% endfor %} #}
         {% endfor %}
         </div>
-        {% if items %}
-            <h2>{{ messages("Tags") }}</h2>
-        {% endif %}
     {% endif %}
     {% if items %}
-        <div class="postlist flex flex-wrap justify-start space-x-8 mx-auto">
+        <div class="prose mt-16">
+            {# FUTURE: Allow to customize this message #}
+            {# <h1>{{ messages("Tags") }}</h1> #}
+
+            {# Use prose spacing #}
+            <h2>{{ cat_index_page_tags_title|e }}</h2>
+            <div></div>
+        </div>
+        <div class="postlist flex flex-wrap justify-center gap-8 mx-auto">
         {% for text, link in items %}
             {% if text not in hidden_tags %}
-                <a class="reference listtitle btn force-no-underline" href="{{ link }}">
+                <a class="reference listtitle btn" href="{{ link }}">
                 <span class="text-neutral-content">{{ text|e }}</span>
                 </a>
             {% endif %}

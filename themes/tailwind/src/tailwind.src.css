@@ -30,6 +30,10 @@
   .force-no-padding {
     padding: 0 !important;
   }
+
+  .force-border-2 {
+    border-width: 2px !important
+  }
 }
 
 /* I like my captions centered */
@@ -53,3 +57,9 @@ sup::after {
   counter-increment: fn_counter_var;
   content: counter(fn_counter_var);
 }
+
+/* Fix for daisy-ui inside prose! */
+/* FUTURE: Fix Steps.tmpl so that it can be used elsewhere! */
+/* .steps step:before {
+  position: static;
+} */

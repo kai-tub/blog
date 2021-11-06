@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+from typing import Optional
 
 # !! This is the configuration of Nikola. !! #
 # !!  You should edit it to your liking.  !! #
@@ -161,8 +162,8 @@ rss_svg_path = """
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        ("/archive.html", (archive_svg_path, "Archive")),
-        ("/categories/", (tag_svg_path, "Tags")),
+        # ("/archive.html", (archive_svg_path, "Archive")),
+        # ("/categories/", (tag_svg_path, "Tags")),
         ("/rss.xml", (rss_svg_path, "RSS")),
     ),
 }
@@ -171,7 +172,10 @@ NAVIGATION_LINKS = {
 # although themes may not always support them. (translatable)
 # (Bootstrap 4: right-side of navbar, Bootblog 4: right side of title)
 NAVIGATION_ALT_LINKS = {
-    DEFAULT_LANG: ()
+    DEFAULT_LANG: (
+        ("/", "Blog"),
+        ("/pages/about-me", "About"),
+    )
 }
 
 # Name of the theme to use.
@@ -475,7 +479,8 @@ HIDDEN_TAGS = ['mathjax']
 # output / TRANSLATION[lang] / CATEGORY_PATH / CATEGORY_PREFIX category.html (list of posts for a category)
 # output / TRANSLATION[lang] / CATEGORY_PATH / CATEGORY_PREFIX category RSS_EXTENSION (RSS feed for a category)
 # (translatable)
-# CATEGORY_PATH = "categories"
+# CUSTOM
+CATEGORY_PATH = ""
 # CATEGORY_PREFIX = "cat_"
 
 # By default, the list of categories is stored in
@@ -498,25 +503,59 @@ CATEGORY_OUTPUT_FLAT_HIERARCHY = False
 
 # If CATEGORY_PAGES_ARE_INDEXES is set to True, each category's page will contain
 # the posts themselves. If set to False, it will be just a list of links.
-# CATEGORY_PAGES_ARE_INDEXES = False
+CATEGORY_PAGES_ARE_INDEXES = True
 
 # Set descriptions for category pages to make them more interesting. The
 # default is no description. The value is used in the meta description
 # and displayed underneath the category list or index page’s title.
-# CATEGORY_DESCRIPTIONS = {
-#    DEFAULT_LANG: {
-#        "blogging": "Meta-blog posts about blogging.",
-#        "open source": "My contributions to my many, varied, ever-changing, and eternal libre software projects."
-#    },
-# }
+CATEGORY_DESCRIPTIONS = {
+   DEFAULT_LANG: {
+       "jupyter2blog": """
+       Some notes on how I am generating my blog posts from jupyter notebooks.
+       I try to give a general motivation, an overview on how to build such
+       a pipeline, and what I would've wished to know from the start.""",
+    #    "open source": "My contributions to my many, varied, ever-changing, and eternal libre software projects."
+        "big-data-computing": """
+        A collection of techniques to work with very large datasets.
+        The main programming language is Python.
+        This blog series highlights that Python is, in fact, <i>not slow</i>.
+        It is all a matter of what libraries are used ;)
+        """
+   },
+}
 
 # Set special titles for category pages. The default is "Posts about CATEGORY".
-# CATEGORY_TITLES = {
-#    DEFAULT_LANG: {
-#        "blogging": "Meta-posts about blogging",
-#        "open source": "Posts about open source software"
-#    },
-# }
+CATEGORY_TITLES = {
+   DEFAULT_LANG: {
+       "jupyter2blog": "My personal jupyter2blog project",
+       "big-data-computing": "Big Data Computing"
+   },
+}
+
+### CUSTOM
+CATEGORY_INDEX_PAGE_TITLE = "All blog series"
+CATEGORY_INDEX_PAGE_TAGS_TITLE = "Search with tag"
+
+# Give category an image for the index page!
+CATEGORY_IMG_PATHS = {
+}
+
+def cat_to_pretty_title(category_name: str) -> str:
+    if "CATEGORY_TITLES" not in globals():
+        raise ValueError("Need to set `CATEGORY_TITLES` in `conf.py` first!")
+    title = CATEGORY_TITLES.get(DEFAULT_LANG, {}).get(category_name)
+    return title if title is not None else category_name
+
+def cat_to_desc(category_name: str) -> str:
+    if "CATEGORY_DESCRIPTIONS" not in globals():
+        raise ValueError("Need to set `CATEGORY_TITLES` in `conf.py` first!")
+    desc = CATEGORY_DESCRIPTIONS.get(DEFAULT_LANG, {}).get(category_name)
+    return desc if desc is not None else category_name
+
+def cat_to_img_path(category_name: str) -> Optional[str]:
+    if "CATEGORY_IMG_PATHS" not in globals():
+        raise ValueError("Need to set `CATEGORY_TITLES` in `conf.py` first!")
+    return CATEGORY_IMG_PATHS.get(category_name)
 
 # If you do not want to display a category publicly, you can mark it as hidden.
 # The category will not be displayed on the category list page.
@@ -601,7 +640,8 @@ HIDDEN_AUTHORS = ['Guest']
 # Final location for the main blog page and sibling paginated pages is
 # output / TRANSLATION[lang] / INDEX_PATH / index-*.html
 # (translatable)
-# INDEX_PATH = ""
+# CUSTOM
+INDEX_PATH = "index"
 
 # Optional HTML that displayed on “main” blog index.html files.
 # May be used for a greeting. (translatable)
@@ -1508,7 +1548,13 @@ GLOBAL_CONTEXT = {
         "label": "discussion",
         "theme": "github-dark",
         "crossorigin": "anonymous",
-    }
+    },
+    # CUSTOM:
+    "cat_to_pretty_title": cat_to_pretty_title,
+    "cat_to_desc": cat_to_desc,
+    "cat_to_img_path": cat_to_img_path,
+    "cat_index_page_title": CATEGORY_INDEX_PAGE_TITLE,
+    "cat_index_page_tags_title": CATEGORY_INDEX_PAGE_TAGS_TITLE,
 }
 
 # Add functions here and they will be called with template
