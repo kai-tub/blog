@@ -2,6 +2,10 @@
 auto-build:
 	nikola auto --browser
 
+clean-auto-build:
+	nikola clean -a -c --forget
+	nikola auto --browser
+
 # build nikola website
 build-website:
 	nikola build
@@ -16,4 +20,5 @@ build-all-clean: install build-theme build-website
 install:
 	mamba env create --file {{justfile_directory()}}/env.yml --name blog --force
 	mamba run --name blog python -m ipykernel install --user
-	mamba run --name blog nb-clean add-filter --preserve-cell-metadata
+	mamba run --name blog nbstripout --install
+	mamba run --name blog python -m poetry install
