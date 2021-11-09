@@ -16,9 +16,13 @@ build-theme:
 # Install environment, build theme files and build-website
 build-all-clean: install build-theme build-website
 
-# Install all dependencies with mamba and install nb-clean filter to ensure that commits aren't dirty
-install:
-	mamba env create --file {{justfile_directory()}}/env.yml --name blog --force
+# Install all dependencies with mamba and install nbstripout filter to clean notebooks
+install: install-base install-poetry
+
+install-poetry:
+	mamba run --name blog python -m poetry install
 	mamba run --name blog python -m ipykernel install --user
 	mamba run --name blog nbstripout --install
-	mamba run --name blog python -m poetry install
+
+install-base:
+	mamba env create --file {{justfile_directory()}}/env.yml --name blog --force
