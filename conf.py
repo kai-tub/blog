@@ -19,7 +19,7 @@ from typing import Optional
 # Data about this site
 BLOG_AUTHOR = "Kai Norman Clasen"  # (translatable)
 BLOG_TITLE = "The Lost Data Scientist"  # (translatable)
-BLOG_SUBTITLE = "Thoughts along the way" # (translatable)
+BLOG_SUBTITLE = "Thoughts along the way"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
 SITE_URL = "https://kai-tub.tech/"
@@ -27,7 +27,9 @@ SITE_URL = "https://kai-tub.tech/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://example.com/"
 BLOG_EMAIL = "k.clasen@protonmail.com"
-BLOG_DESCRIPTION = "My data science journey. Sharing my thoughts along the way."  # (translatable)
+BLOG_DESCRIPTION = (
+    "My data science journey. Sharing my thoughts along the way."  # (translatable)
+)
 
 # Nikola is multilingual!
 #
@@ -113,7 +115,7 @@ TRANSLATIONS = {
 # this pattern is also used for metadata:
 #     something.meta -> something.pl.meta
 
-TRANSLATIONS_PATTERN = '{path}.{lang}.{ext}'
+TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 
 # Links for the sidebar / navigation bar.  (translatable)
 # This is a dict.  The keys are languages, and values are tuples.
@@ -174,19 +176,20 @@ NAVIGATION_LINKS = {
 NAVIGATION_ALT_LINKS = {
     DEFAULT_LANG: (
         ("/", "Blog"),
+        ("/galleries", "Art"),
         ("/pages/about-me", "About"),
     )
 }
 
 # Name of the theme to use.
-#THEME = "bootblog4"
+# THEME = "bootblog4"
 # THEME = "custom-bulma"
 THEME = "tailwind"
 
 # A theme color. In default themes, it might be displayed by some browsers as
 # the browser UI color (eg. Chrome on Android). Other themes might also use it
 # as an accent color (the default ones don’t). Must be a HEX value.
-THEME_COLOR = '#363636!important'
+THEME_COLOR = "#363636!important"
 
 # Theme configuration. Fully theme-dependent. (translatable)
 # Samples for bootblog4 (enabled) and bootstrap4 (commented) follow.
@@ -199,18 +202,18 @@ THEME_COLOR = '#363636!important'
 THEME_CONFIG = {
     DEFAULT_LANG: {
         # Show the latest featured post in a large box, with the previewimage as its background.
-        'featured_large': False,
+        "featured_large": False,
         # Show the first (remaining) two featured posts in small boxes.
-        'featured_small': False,
+        "featured_small": False,
         # Show featured posts on mobile.
-        'featured_on_mobile': True,
+        "featured_on_mobile": True,
         # Show image in `featured_large` on mobile.
         # `featured_small` displays them only on desktop.
-        'featured_large_image_on_mobile': True,
+        "featured_large_image_on_mobile": True,
         # Strip HTML from featured post text.
-        'featured_strip_html': False,
+        "featured_strip_html": False,
         # Contents of the sidebar, If empty, the sidebar is not displayed.
-        'sidebar': ''
+        "sidebar": "",
     }
 }
 # Config for bootstrap4:
@@ -265,7 +268,7 @@ POSTS = (
     ("posts/*.md", "posts", "post.tmpl"),
     ("posts/*.txt", "posts", "post.tmpl"),
     ("posts/*.html", "posts", "post.tmpl"),
-    ("posts/*.ipynb", "posts", "post.tmpl")
+    ("posts/*.ipynb", "posts", "post.tmpl"),
 )
 PAGES = (
     ("pages/*.rst", "pages", "page.tmpl"),
@@ -294,7 +297,7 @@ TIMEZONE = "Europe/Berlin"
 # Date format used to display post dates. (translatable)
 # Used by babel.dates, CLDR style: http://cldr.unicode.org/translation/date-time-1/date-time
 # You can also use 'full', 'long', 'medium', or 'short'
-DATE_FORMAT = 'dd.MM.yyyy'
+DATE_FORMAT = "dd.MM.yyyy"
 
 # Date format used to display post dates, if local dates are used. (translatable)
 # Used by Luxon: https://moment.github.io/luxon/docs/manual/formatting
@@ -338,18 +341,18 @@ DATE_FORMAT = 'dd.MM.yyyy'
 # 'markdown' is Markdown
 # 'html' assumes the file is HTML and just copies it
 COMPILERS = {
-    "rest": ['.rst', '.txt'],
-    "markdown": ['.md', '.mdown', '.markdown'],
-    "textile": ['.textile'],
-    "txt2tags": ['.t2t'],
-    "bbcode": ['.bb'],
-    "wiki": ['.wiki'],
+    "rest": [".rst", ".txt"],
+    "markdown": [".md", ".mdown", ".markdown"],
+    "textile": [".textile"],
+    "txt2tags": [".t2t"],
+    "bbcode": [".bb"],
+    "wiki": [".wiki"],
     # "ipynb": ['.ipynb'],
-    "html": ['.html', '.htm'],
+    "html": [".html", ".htm"],
     # PHP files are rendered the usual way (i.e. with the full templates).
     # The resulting files have .php extensions, making it possible to run
     # them without reconfiguring your server to recognize them.
-    "php": ['.php'],
+    "php": [".php"],
     # Pandoc detects the input from the source filename
     # but is disabled by default as it would conflict
     # with many of the others.
@@ -357,7 +360,7 @@ COMPILERS = {
 }
 
 # Comes from my plugin I guess.
-COMPILERS["ipynb_sc_last"] = ['.ipynb']
+COMPILERS["ipynb_sc_last"] = [".ipynb"]
 
 # Enable reST directives that insert the contents of external files such
 # as "include" and "raw." This maps directly to the docutils file_insertion_enabled
@@ -452,7 +455,7 @@ COMPILERS["ipynb_sc_last"] = ['.ipynb']
 # If you do not want to display a tag publicly, you can mark it as hidden.
 # The tag will not be displayed on the tag list page and posts.
 # Tag pages will still be generated.
-HIDDEN_TAGS = ['mathjax']
+HIDDEN_TAGS = ["mathjax"]
 
 # Only include tags on the tag list/overview page if there are at least
 # TAGLIST_MINIMUM_POSTS number of posts or more with every tag. Every tag
@@ -509,27 +512,27 @@ CATEGORY_PAGES_ARE_INDEXES = True
 # default is no description. The value is used in the meta description
 # and displayed underneath the category list or index page’s title.
 CATEGORY_DESCRIPTIONS = {
-   DEFAULT_LANG: {
-       "jupyter2blog": """
+    DEFAULT_LANG: {
+        "jupyter2blog": """
        Some notes on how I am generating my blog posts from jupyter notebooks.
        I try to give a general motivation, an overview on how to build such
        a pipeline, and what I would've wished to know from the start.""",
-    #    "open source": "My contributions to my many, varied, ever-changing, and eternal libre software projects."
+        #    "open source": "My contributions to my many, varied, ever-changing, and eternal libre software projects."
         "big-data-computing": """
         A collection of techniques to work with very large datasets.
         The main programming language is Python.
         This blog series highlights that Python is, in fact, <i>not slow</i>.
         It is all a matter of what libraries are used ;)
-        """
-   },
+        """,
+    },
 }
 
 # Set special titles for category pages. The default is "Posts about CATEGORY".
 CATEGORY_TITLES = {
-   DEFAULT_LANG: {
-       "jupyter2blog": "My personal jupyter2blog project",
-       "big-data-computing": "Big Data Computing"
-   },
+    DEFAULT_LANG: {
+        "jupyter2blog": "My personal jupyter2blog project",
+        "big-data-computing": "Big Data Computing",
+    },
 }
 
 ### CUSTOM
@@ -537,8 +540,8 @@ CATEGORY_INDEX_PAGE_TITLE = "All blog series"
 CATEGORY_INDEX_PAGE_TAGS_TITLE = "Search with tag"
 
 # Give category an image for the index page!
-CATEGORY_IMG_PATHS = {
-}
+CATEGORY_IMG_PATHS = {}
+
 
 def cat_to_pretty_title(category_name: str) -> str:
     if "CATEGORY_TITLES" not in globals():
@@ -546,16 +549,19 @@ def cat_to_pretty_title(category_name: str) -> str:
     title = CATEGORY_TITLES.get(DEFAULT_LANG, {}).get(category_name)
     return title if title is not None else category_name
 
+
 def cat_to_desc(category_name: str) -> str:
     if "CATEGORY_DESCRIPTIONS" not in globals():
         raise ValueError("Need to set `CATEGORY_TITLES` in `conf.py` first!")
     desc = CATEGORY_DESCRIPTIONS.get(DEFAULT_LANG, {}).get(category_name)
     return desc if desc is not None else category_name
 
+
 def cat_to_img_path(category_name: str) -> Optional[str]:
     if "CATEGORY_IMG_PATHS" not in globals():
         raise ValueError("Need to set `CATEGORY_TITLES` in `conf.py` first!")
     return CATEGORY_IMG_PATHS.get(category_name)
+
 
 # If you do not want to display a category publicly, you can mark it as hidden.
 # The category will not be displayed on the category list page.
@@ -632,7 +638,7 @@ HIDDEN_CATEGORIES = []
 # If you do not want to display an author publicly, you can mark it as hidden.
 # The author will not be displayed on the author list page and posts.
 # Tag pages will still be generated.
-HIDDEN_AUTHORS = ['Guest']
+HIDDEN_AUTHORS = ["Guest"]
 
 # Allow multiple, comma-separated authors for a post? (Requires theme support, present in built-in themes)
 # MULTIPLE_AUTHORS_PER_POST = False
@@ -645,9 +651,7 @@ INDEX_PATH = "index"
 
 # Optional HTML that displayed on “main” blog index.html files.
 # May be used for a greeting. (translatable)
-FRONT_INDEX_HEADER = {
-    DEFAULT_LANG: ''
-}
+FRONT_INDEX_HEADER = {DEFAULT_LANG: ""}
 
 # Create per-month archives instead of per-year
 # CREATE_MONTHLY_ARCHIVE = False
@@ -741,11 +745,11 @@ REDIRECTIONS = []
 # For more details, read the manual:
 # https://getnikola.com/handbook.html#deploying-to-github
 # You will need to configure the deployment branch on GitHub.
-GITHUB_SOURCE_BRANCH = 'src'
-GITHUB_DEPLOY_BRANCH = 'master'
+GITHUB_SOURCE_BRANCH = "src"
+GITHUB_DEPLOY_BRANCH = "master"
 
 # The name of the remote where you wish to push to, using github_deploy.
-GITHUB_REMOTE_NAME = 'origin'
+GITHUB_REMOTE_NAME = "origin"
 
 # Whether or not github_deploy should commit to the source branch automatically
 # before deploying.
@@ -787,7 +791,7 @@ GITHUB_COMMIT_SOURCE = True
 
 # Make the dependency optional for now
 FILTERS = {
-   ".jpg": ["jpegoptim --strip-all -m50 -v %s || true"],
+    ".jpg": ["jpegoptim --strip-all -m50 -v %s || true"],
 }
 
 # Executable for the "yui_compressor" filter (defaults to 'yui-compressor').
@@ -843,14 +847,14 @@ FILTERS = {
 # Default is:
 # GALLERY_FOLDERS = {"galleries": "galleries"}
 # More gallery options:
-# THUMBNAIL_SIZE = 180
-# MAX_IMAGE_SIZE = 1280
-# USE_FILENAME_AS_TITLE = True
+THUMBNAIL_SIZE = 350
+MAX_IMAGE_SIZE = 1280
+USE_FILENAME_AS_TITLE = False
 # EXTRA_IMAGE_EXTENSIONS = []
 
 # Use a thumbnail (defined by ".. previewimage:" in the gallery's index) in
 # list of galleries for each gallery
-GALLERIES_USE_THUMBNAIL = False
+GALLERIES_USE_THUMBNAIL = True
 
 # Image to use as thumbnail for those galleries that don't have one
 # None: show a grey square
@@ -862,7 +866,7 @@ GALLERIES_DEFAULT_THUMBNAIL = None
 
 # If set to True, EXIF data will be copied when an image is thumbnailed or
 # resized. (See also EXIF_WHITELIST)
-# PRESERVE_EXIF_DATA = False
+PRESERVE_EXIF_DATA = True
 
 # If you have enabled PRESERVE_EXIF_DATA, this option lets you choose EXIF
 # fields you want to keep in images. (See also PRESERVE_EXIF_DATA)
@@ -879,7 +883,7 @@ GALLERIES_DEFAULT_THUMBNAIL = None
 # PRESERVE_EXIF_DATA is set to True
 # To preserve ALL EXIF data, set EXIF_WHITELIST to {"*": "*"}
 
-# EXIF_WHITELIST = {}
+EXIF_WHITELIST = {"0th": ["Copyright"]}
 
 # Some examples of EXIF_WHITELIST settings:
 
@@ -919,7 +923,7 @@ GALLERIES_DEFAULT_THUMBNAIL = None
 # (the thumbnail has ``.thumbnail`` added before the file extension by default,
 # but a different naming template can be configured with IMAGE_THUMBNAIL_FORMAT).
 
-IMAGE_FOLDERS = {'images': 'images'}
+IMAGE_FOLDERS = {"images": "images"}
 # IMAGE_THUMBNAIL_SIZE = 400
 # IMAGE_THUMBNAIL_FORMAT = '{name}.thumbnail{ext}'
 
@@ -989,7 +993,7 @@ IMAGE_FOLDERS = {'images': 'images'}
 # This list MAY be incomplete since pygments adds styles every now and then.
 # Check with list(pygments.styles.get_all_styles()) in an interpreter.
 #
-CODE_COLOR_SCHEME = 'monokai'
+CODE_COLOR_SCHEME = "monokai"
 
 # FAVICONS contains (name, file, size) tuples.
 # Used to create favicon link like this:
@@ -1065,15 +1069,15 @@ CONTENT_FOOTER_FORMATS = {
             "email": BLOG_EMAIL,
             "author": BLOG_AUTHOR,
             "date": time.gmtime().tm_year,
-            "license": LICENSE
-        }
+            "license": LICENSE,
+        },
     )
 }
 
 # A simple copyright tag for inclusion in RSS feeds that works just
 # like CONTENT_FOOTER and CONTENT_FOOTER_FORMATS
 RSS_COPYRIGHT = 'Contents © {date} <a href="mailto:{email}">{author}</a> {license}'
-RSS_COPYRIGHT_PLAIN = 'Contents © {date} {author} {license}'
+RSS_COPYRIGHT_PLAIN = "Contents © {date} {author} {license}"
 RSS_COPYRIGHT_FORMATS = CONTENT_FOOTER_FORMATS
 
 # To use comments, you can choose between different third party comment
@@ -1096,7 +1100,7 @@ COMMENT_SYSTEM_ID = "kai-tub/blog"
 # Enable comments on pages (i.e. not posts)?
 # COMMENTS_IN_PAGES = False
 # Enable comments on picture gallery pages?
-# COMMENTS_IN_GALLERIES = False
+COMMENTS_IN_GALLERIES = True
 
 # What file should be used for directory indexes?
 # Defaults to index.html
@@ -1197,8 +1201,8 @@ import os
 os.environ["responsive"] = "True"
 
 IPYNB_CONFIG = {
-    'Exporter': {
-        'template_file': 'themes/tailwind/ipynb.tmpl',
+    "Exporter": {
+        "template_file": "themes/tailwind/ipynb.tmpl",
         "anchor_link_text": " #",
         "preprocessors": [
             ExecutePreprocessor(timeout=300),
@@ -1215,34 +1219,38 @@ IPYNB_CONFIG = {
                     "collapse_hide",
                     "max-w-md",
                 ),
-                remove_line=True),
+                remove_line=True,
+            ),
             ConvertBlockNotesToShortCodes(
                 # Is **not** case-insensitive!
                 # FUTURE: should use `to_raw`
                 # Issues are the links that should be rendered
-                short_code_names=([
-                    "Note",
-                    "Warning",
-                    "Important",
-                    "Tip",
-                ]),
+                short_code_names=(
+                    [
+                        "Note",
+                        "Warning",
+                        "Important",
+                        "Tip",
+                    ]
+                ),
                 to_raw_cell=False,
             ),
             ConvertBlockNotesToShortCodes(
                 # for shortcodes that should not be processed
-                short_code_names=([
-                    "Youtube",
-                ]),
+                short_code_names=(
+                    [
+                        "Youtube",
+                    ]
+                ),
                 to_raw_cell=True,
             ),
             TagRemovePreprocessor(
                 remove_cell_tags=("hide",),
-                remove_input_tags=("hide-input", "hide_input"), remove_all_outputs_tags=("hide-output", "hide_output")
+                remove_input_tags=("hide-input", "hide_input"),
+                remove_all_outputs_tags=("hide-output", "hide_output"),
             ),
             # Remove empty cells
-            RegexRemovePreprocessor(
-                patterns=(r"\s*\Z",)
-            ),
+            RegexRemovePreprocessor(patterns=(r"\s*\Z",)),
             # FUTURE: Maybe customize to automatically export and save displayed images
             # ExtractOutputPreprocessor(),
             # TODO: Create a copy-image files preprocessor
@@ -1251,9 +1259,8 @@ IPYNB_CONFIG = {
             # After collecting these images copy them from relative path
             # to the given dest folder (should be based on complete path to conf.py file)
             # The outputted html could pass through a shortcode for custom features
-
             # Ideally, it should be possible to do some smart gridding when multiple images are presented
-        ]
+        ],
     },
 }
 
@@ -1264,7 +1271,11 @@ IPYNB_CONFIG = {
 #       with the MarkdownExtension class and should not be added here.
 # Defaults are markdown.extensions.(fenced_code|codehilite|extra)
 # markdown.extensions.meta is required for Markdown metadata.
-MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', 'markdown.extensions.codehilite', 'markdown.extensions.extra']
+MARKDOWN_EXTENSIONS = [
+    "markdown.extensions.fenced_code",
+    "markdown.extensions.codehilite",
+    "markdown.extensions.extra",
+]
 
 # Options to be passed to markdown extensions (See https://python-markdown.github.io/reference/)
 # Default is {} (no config at all)
