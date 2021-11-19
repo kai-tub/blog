@@ -18,8 +18,8 @@ from typing import Optional
 
 # Data about this site
 BLOG_AUTHOR = "Kai Norman Clasen"  # (translatable)
-BLOG_TITLE = "The Lost Data Scientist"  # (translatable)
-BLOG_SUBTITLE = "Thoughts along the way"  # (translatable)
+BLOG_TITLE = "SnakeMap Navigation"  # (translatable)
+BLOG_SUBTITLE = "Notes along the way"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
 SITE_URL = "https://kai-tub.tech/"
@@ -341,8 +341,10 @@ DATE_FORMAT = "dd.MM.yyyy"
 # 'markdown' is Markdown
 # 'html' assumes the file is HTML and just copies it
 COMPILERS = {
-    "rest": [".rst", ".txt"],
-    "markdown": [".md", ".mdown", ".markdown"],
+    # "rest": [".rst", ".txt"],
+    "rest": [".rst"],
+    # ".txt" is used for some index files! Like gallery/index.txt!
+    "markdown": [".md", ".mdown", ".markdown", ".txt"],
     "textile": [".textile"],
     "txt2tags": [".t2t"],
     "bbcode": [".bb"],
@@ -1553,7 +1555,7 @@ WARN_ABOUT_TAG_METADATA = False
 # Put in global_context things you want available on all your templates.
 # It can be anything, data, functions, modules, etc.
 GLOBAL_CONTEXT = {
-    "blog_subtitle": BLOG_SUBTITLE,
+    # "blog_subtitle": BLOG_SUBTITLE,
     "utterances_config": {
         "issue-term": "url",
         "label": "discussion",
