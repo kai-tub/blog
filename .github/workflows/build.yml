@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
 
 jobs:
   build_and_deploy:
@@ -44,6 +47,7 @@ jobs:
           just build-theme
           just build-website
       - name: Deploy to Server
+        if: ${{ github.event_name == 'push' }}
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
