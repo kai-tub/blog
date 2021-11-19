@@ -16,4 +16,4 @@ posts/images/
 tmp.*
 .vscode/
 nbconvert_dev/nbs
-files/no_git/
+files/_*
