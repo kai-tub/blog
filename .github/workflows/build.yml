@@ -45,7 +45,7 @@ jobs:
       - name: build-site
         run: |
           just build-theme
-          just build-website
+          just build
       - name: Deploy to Server
         if: ${{ github.event_name == 'push' }}
         uses: easingthemes/ssh-deploy@main
