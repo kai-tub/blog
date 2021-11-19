@@ -1,0 +1,4 @@
+<!--
+.. title: Artworks — Data is beautiful
+.. description: My collection of data-driven artworks.
+-->

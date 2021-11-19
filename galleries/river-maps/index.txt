@@ -1,0 +1,13 @@
+<!--
+.. title: Country River Maps
+.. description: A collection of river maps from various countries around the globe. The aesthetics are kept minimal and clean with a dark and blue style.
+.. previewimage: /galleries/river-maps/FR.jpeg
+-->
+
+A collection of river maps from various countries around the globe.
+
+The aesthetics are kept minimal and clean with a dark and blue style.
+
+{{% Important %}}
+SnakeMap Navigation retains copyright privileges on all artworks!
+{{% /Important %}}

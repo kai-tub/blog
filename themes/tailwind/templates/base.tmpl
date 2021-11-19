@@ -12,7 +12,6 @@
 </head>
 
 {% set prose_global_option = "prose prose-lg" %}
-{# TODO: Allow to switch prose off if page requires "fine-tuning"! #}
 
 <body class="main-site flex flex-col min-h-screen">
     <section id="head">
@@ -36,6 +35,14 @@
             <!-- end fancy dates -->
             {% endif %}
         {% block extra_js %}{% endblock %}
+        {# Changed from divcontent to section#content #}
+        <script>
+        baguetteBox.run('section#content', {
+            ignoreClass: 'islink',
+            overlayBackgroundColor: 'rgba(0,0,0,1.0)',
+            noScrollbars: true,
+            captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+        </script>
         {{ body_end }}
         {{ template_hooks['body_end']() }}
     </section>
