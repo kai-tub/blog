@@ -28,7 +28,7 @@
     {% if folders %}
         {% if galleries_use_thumbnail %}
             {% for (folder, ftitle, fpost) in folders %}
-            <div class="thumnbnail-container card text-neutral-content bg-base-300 card-side bordered w-4/5 mx-auto">
+            <div class="thumnbnail-container card text-neutral-content bg-base-300 md:card-side bordered w-4/5 mx-auto">
                 {# <a href="{{ folder }}" class="thumbnail image-reference" title="{{ ftitle|e }}"> #}
                     <figure>
                     {% if fpost and fpost.previewimage %}
