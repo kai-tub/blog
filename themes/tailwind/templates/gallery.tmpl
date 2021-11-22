@@ -32,7 +32,8 @@
                 {# <a href="{{ folder }}" class="thumbnail image-reference" title="{{ ftitle|e }}"> #}
                     <figure>
                     {% if fpost and fpost.previewimage %}
-                        <img src="{{ fpost.previewimage }}" alt="{{ ftitle|e }}" loading="lazy" style="max-width:{{ thumbnail_size }}px; max-height:{{ thumbnail_size }}px;" />
+                        {# FUTURE: Maybe allow dynamic bg-setting #}
+                        <img src="{{ fpost.previewimage }}" alt="{{ ftitle|e }}" loading="lazy" style="max-height:{{ thumbnail_size }}px;" class="object-contain bg-black"/>
                     {% else %}
                         <div style="height: {{ thumbnail_size }}px; width: {{ thumbnail_size }}px; background-color: #eee;"></div>
                     {% endif %}
