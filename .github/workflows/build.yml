@@ -31,7 +31,7 @@ jobs:
         with:
           # gallery folder must be also named "galleries" on MEGA!
           # Will auto-merge remote folder with nikola folder
-          args: get ${{secrets.GALLERY_MEGA_LINK}} .
+          args: get ${{secrets.GALLERY_MEGA_LINK}} ${{env.GITHUB_WORKSPACE}}
       # Make it reproducible with act
       # just action uses typescript which isn't supported
       # - uses: extractions/setup-just@v1
@@ -61,6 +61,8 @@ jobs:
         run: |
           just build-theme
           just build
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Deploy to Server
         if: ${{ github.event_name == 'push' }}
         uses: easingthemes/ssh-deploy@main
