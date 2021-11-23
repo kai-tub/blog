@@ -7,6 +7,12 @@ on:
   pull_request:
     branches:
       - "main"
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: "Run the build with tmate debugging enabled"
+        required: false
+        default: false
 
 jobs:
   build_and_deploy:
@@ -17,6 +23,9 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       - uses: Difegue/action-megacmd@master
         if: ${{ github.event_name == 'push' || env.ACT }}
         with:
