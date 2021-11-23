@@ -32,8 +32,13 @@
     {% endif %} #}
     <a href="{{ _link("root", None, lang) }}" title="{{ blog_title|e }}" rel="home">
         {% if show_blog_title %}
-                <div class="font-bold text-3xl ssm:text-5xl mb-4">
-                  {{ blog_title|e }}
+                <div class="font-bold text-3xl ssm:text-5xl mb-4 flex items-center">
+                  <div class="flex-1">
+                    {{ blog_title|e }}
+                  </div>
+                  <div class="w-24 h-24 flex-initial -ml-20 p-1">
+                    <img src="{{ logo_url }}" alt="" id="logo">
+                  </div>
                 </div>
                 <div class="font-bold text-xl mb-6">
                   {{ blog_subtitle|e }}
@@ -50,7 +55,6 @@
                 <div class="flex items-center flex-none">
                     {{ html_navigation_links_entries(navigation_alt_links) }}
                     {{ template_hooks['menu_alt']() }}
-                    {# TODO: Make the navbar left part #}
                 </div>
                 {# mobile menu button #}
                 <div class="flex md:hidden">
