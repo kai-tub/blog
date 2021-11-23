@@ -23,9 +23,9 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      #   if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       - uses: Difegue/action-megacmd@master
         if: ${{ github.event_name == 'push' || env.ACT }}
         with:
@@ -61,6 +61,11 @@ jobs:
         run: |
           just build-theme
           just build
+      # just build will run the notebooks and cache the output of the notebooks
+      # it will not, however, sync the file outputs of the runs!
+      # this requires another build run to sync the output!
+      - name: sync build-output
+        run: just build
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
       - name: Deploy to Server
