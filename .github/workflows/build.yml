@@ -23,15 +23,14 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-      #   if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       - uses: Difegue/action-megacmd@master
-        if: ${{ github.event_name == 'push' || env.ACT }}
+        if: ${{ github.event_name == 'push' || env.ACT || (github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled) }}
         with:
           # gallery folder must be also named "galleries" on MEGA!
           # Will auto-merge remote folder with nikola folder
           args: get ${{secrets.GALLERY_MEGA_LINK}} ${{env.GITHUB_WORKSPACE}}
+      # May get permission errors when accessing gallery from running action-megacmd docker as root
+      - run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       # Make it reproducible with act
       # just action uses typescript which isn't supported
       # - uses: extractions/setup-just@v1
@@ -68,6 +67,7 @@ jobs:
         run: just build
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       - name: Deploy to Server
         if: ${{ github.event_name == 'push' }}
         uses: easingthemes/ssh-deploy@main
