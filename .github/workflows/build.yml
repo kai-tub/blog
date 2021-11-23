@@ -17,6 +17,13 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
+      - uses: Difegue/action-megacmd@master
+        if: ${{ github.event_name == 'push' || env.ACT }}
+        with:
+          # gallery folder must be also named gallery on MEGA!
+          # Will auto-merge folders
+          args: get ${{secrets.GALLERY_MEGA_LINK}} .
+      - run: echo "::debug::$(ls galleries/*)"
       # Make it reproducible with act
       # just action uses typescript which isn't supported
       # - uses: extractions/setup-just@v1
