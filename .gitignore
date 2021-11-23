@@ -17,3 +17,6 @@ tmp.*
 .vscode/
 nbconvert_dev/nbs
 files/_*
+# gallery files should not be stored in git!
+galleries/**/*
+!galleries/index.txt

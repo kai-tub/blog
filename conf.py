@@ -851,7 +851,7 @@ FILTERS = {
 # More gallery options:
 THUMBNAIL_SIZE = 350
 MAX_IMAGE_SIZE = 1280
-USE_FILENAME_AS_TITLE = False
+USE_FILENAME_AS_TITLE = True
 # EXTRA_IMAGE_EXTENSIONS = []
 
 # Use a thumbnail (defined by ".. previewimage:" in the gallery's index) in
