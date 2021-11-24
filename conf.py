@@ -18,7 +18,7 @@ from typing import Optional
 
 # Data about this site
 BLOG_AUTHOR = "Kai Norman Clasen"  # (translatable)
-BLOG_TITLE = "SnakeMap Navigation"  # (translatable)
+BLOG_TITLE = "SnakeMap\nNavigation"  # (translatable)
 BLOG_SUBTITLE = "Notes along the way"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
