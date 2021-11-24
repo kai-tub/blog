@@ -13,7 +13,6 @@
 {% block content %}
     {# {{ ui.breadcrumbs(crumbs) }} #}
     {# FUTURE: Add option to use category tag from tags.tmpl #}
-    {# TODO: Write a map generator script that reads values from a csv file #}
     {# FUTURE: Maybe make the baguette titles a bit cleaner #}
     <div class="{{ prose_global_option }} max-w-full">
     {% if title %}
@@ -23,6 +22,7 @@
     <p>
         {{ post.text() }}
     </p>
+    <div class="my-12"></div>
     </div>
     {% endif %}
     {% if folders %}
@@ -47,7 +47,6 @@
                         </div>
                         <div class="card-actions justify-end">
                             <a href="{{ folder }}" class="btn btn-primary thumbnail image-reference">Take a peek</a>
-                            {# FUTURE: Add links where to buy it from! #}
                         </div>
                     </div>
                 {# </a> #}

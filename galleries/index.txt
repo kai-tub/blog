@@ -2,3 +2,10 @@
 .. title: Artworks — Data is beautiful
 .. description: My collection of data-driven artworks.
 -->
+
+{{% Note %}}
+If you would like to get an awesome looking metal-poster of any of the following artworks, check out my official
+<a href="https://displate.com/SnakeMap_Navigation?art=619b6ee8034d3">Displate Account</a>.
+
+Thank you for support! 💖
+{{% /Note %}}
