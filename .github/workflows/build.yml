@@ -48,12 +48,14 @@ jobs:
         with:
           # This needs to be equal to the env name in the justfile!
           activate-environment: blog
-          environment-file: env.yml
+          environment-file: lock.yml
           use-only-tar-bz2: true # This needs to be set for caching to work
           # Note that pip depdencies aren't cached!
           miniforge-variant: Mambaforge
           use-mamba: true
-      - run: just install-poetry
+      - name: Update to main branch Nikola, as I am waiting for the latest release
+        run: just sync-nikola-master
+      # - run: just install-poetry
       - name: Test installation
         run: python -c "import nikola; print(nikola.__version__)"
       - name: build-site
